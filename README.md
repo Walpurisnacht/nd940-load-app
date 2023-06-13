@@ -1,7 +1,7 @@
 # Project Title
 
-Asteroid Radar Android App
-Second project in Udacity Android Kotlin Developer Nanodegree (ND940)
+LoadApp Android App
+Third project in Udacity Android Kotlin Developer Nanodegree (ND940)
 
 ## Getting Started
 
