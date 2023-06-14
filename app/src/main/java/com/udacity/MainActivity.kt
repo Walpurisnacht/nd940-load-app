@@ -53,6 +53,9 @@ class MainActivity : AppCompatActivity() {
                 )
                 notificationManager.sendNotification(context!!, downloadID)
             }
+
+            // Stop animation when download completed
+            binding.contentMain.customButton.buttonState = ButtonState.Completed
         }
     }
 
@@ -64,6 +67,8 @@ class MainActivity : AppCompatActivity() {
         if (position == -1) {
             // Show information toast to make user select at least one file to download
             Toast.makeText(this, R.string.notification_no_select, Toast.LENGTH_LONG).show()
+            // Stop animation
+            binding.contentMain.customButton.buttonState = ButtonState.Completed
             return
         }
 
