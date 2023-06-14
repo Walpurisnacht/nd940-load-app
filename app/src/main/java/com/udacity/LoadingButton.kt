@@ -5,6 +5,7 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Typeface
+import android.renderscript.Sampler.Value
 import android.util.AttributeSet
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
@@ -45,7 +46,7 @@ class LoadingButton @JvmOverloads constructor(
         )
     }!!
 
-    private var buttonState: ButtonState
+    var buttonState: ButtonState
             by Delegates.observable(ButtonState.Completed) { _, _, newState ->
                 when (newState) {
                     ButtonState.Completed -> {
@@ -53,6 +54,8 @@ class LoadingButton @JvmOverloads constructor(
                         // Note: real purpose is only clickable when done downloading
                         isClickable = true
                         isFocusable = true
+
+                        valueAnimator.repeatCount = 0
                     }
                     ButtonState.Clicked -> {
                         // Disable button click until download complete
@@ -61,6 +64,7 @@ class LoadingButton @JvmOverloads constructor(
 
                         // Restart downloading animation
                         valueAnimator.cancel()
+                        valueAnimator.repeatCount = ValueAnimator.INFINITE
                         valueAnimator.start()
                     }
                     ButtonState.Loading -> {
@@ -93,12 +97,12 @@ class LoadingButton @JvmOverloads constructor(
     }
 
     override fun performClick(): Boolean {
-        super.performClick()
 
         // Handle button state when onClick
         if (ButtonState.Completed == buttonState) {
             buttonState = ButtonState.Clicked
         }
+        super.performClick()
         return true
     }
 
